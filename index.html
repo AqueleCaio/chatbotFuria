@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interface de Chat Moderna</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center p-4">
+    <div class="chat-container w-full max-w-md h-[500px] flex flex-col">
+        <!-- Cabeçalho do chat -->
+        <div class="text-white p-4 flex items-center">
+            <div class="w-10 h-10 rounded-full flex items-center justify-center mr-3">
+                <img src="/assets/Furia_logo.png" alt="" srcset="">
+            </div>
+            <div>
+                <h2 class="font-semibold">Chatbot FURIOSO</h2>
+                <p class="text-xs opacity-80">Online</p>
+            </div>
+        </div>
+        
+        <!-- Área de mensagens -->
+        <div class="flex-1 p-4 overflow-y-auto" id="chat-messages">
+            <!-- Mensagem de boas-vindas gerada por JS -->
+        </div>
+        
+        <!-- Campo de input -->
+        <div class="p-4 border-t border-white-100">
+            <div class="flex items-center">
+                <input 
+                    type="text" 
+                    id="message-input" 
+                    placeholder="Digite sua mensagem..." 
+                    class="message-input flex-1 border focus:outline-none focus:border-gray-500"
+                >
+                <button 
+                    id="send-btn" 
+                    class="send-btn ml-3 w-10 h-10 rounded-full bg-black text-white flex items-center justify-center hover:bg-gray-700"
+                >
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+</body>
+<script src="script.js"></script>
+</html>
