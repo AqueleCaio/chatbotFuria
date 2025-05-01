@@ -163,5 +163,5 @@ $(document).ready(function () {
         }
     });
 
-    addBotMessage("Olá! Sou seu assistente virtual. Como posso te ajudar hoje?");
+    addBotMessage("Olá! Sou o chatbot da FURIA. Estou aqui para te fazer entender tudo sobre a FURIA. O que você deseja saber sobre a FURIA ?");
 });
