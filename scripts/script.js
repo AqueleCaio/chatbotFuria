@@ -10,8 +10,8 @@ $(document).ready(function () {
     async function loadData() {
         try {
             const [categoriasResponse, respostasResponse] = await Promise.all([
-                fetch('./categories.json'),
-                fetch('./answer.json')
+                fetch('scripts/categories.json'),
+                fetch('scripts/answer.json')
             ]);
 
             if (!categoriasResponse.ok || !respostasResponse.ok) {
@@ -88,6 +88,8 @@ $(document).ready(function () {
     
         let hasNonBaseCode = false;
     
+        // Verifica se as palavras do usuário estão nas categorias
+        // e adiciona os códigos correspondentes ao array userCodes
         inputWords.forEach(word => {
             const code = allCategories[word];
             if (code !== undefined) {
@@ -102,10 +104,10 @@ $(document).ready(function () {
             return "Desculpe, não entendi. Pode reformular sua pergunta?";
         }
     
-        // Continuação da lógica de busca por resposta...
         let bestMatches = [];
         let maxIntersection = 0;
     
+        // Verifica as respostas para encontrar a melhor correspondência
         respostas.forEach(r => {
             const intersection = r.codigo.filter(code => userCodes.includes(code));
             const matchScore = intersection.length;
@@ -118,26 +120,41 @@ $(document).ready(function () {
             }
         });
     
+        // Se não houver correspondências, retorna uma mensagem padrão
         if (bestMatches.length === 0) {
             return "Desculpe, não encontrei uma resposta adequada.";
         }
     
-        // Escolher a resposta mais específica
+        // Se houver empate, escolhe a resposta com a soma menor dos códigos (mais específica)
         let bestResponse = bestMatches[0];
         bestMatches.forEach(r => {
-            if (r.codigo.length < bestResponse.codigo.length) {
+            const currentSum = r.codigo.reduce((a, b) => a + b, 0);
+            const bestSum = bestResponse.codigo.reduce((a, b) => a + b, 0);
+            if (currentSum < bestSum) {
                 bestResponse = r;
             }
         });
     
+        // Seleciona uma resposta aleatória se for um array
+        let respostaFinal;
+        if (Array.isArray(bestResponse.resposta)) {
+            if (bestResponse.resposta.length === 1) {
+                respostaFinal = bestResponse.resposta[0];
+            } else {
+                const index = Math.floor(Math.random() * bestResponse.resposta.length);
+                respostaFinal = bestResponse.resposta[index];
+            }
+        } else {
+            respostaFinal = bestResponse.resposta;
+        }
+    
         console.log("Palavras do usuário:", inputWords);
         console.log("Códigos identificados:", userCodes);
-        console.log("Resposta escolhida:", bestResponse.resposta);
+        console.log("Resposta escolhida:", respostaFinal);
     
-        return bestResponse.resposta;
+        return respostaFinal;
     }
     
-
     function handleUserInput(message) {
         addUserMessage(message);
         $messageInput.val('');
