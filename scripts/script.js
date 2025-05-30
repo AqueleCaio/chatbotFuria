@@ -78,7 +78,7 @@ $(document).ready(function () {
         return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
     }
 
-
+    
     function getBestResponse(message) {
         const inputWords = message.toLowerCase().split(/\W+/);
         const userCodes = [];
@@ -130,6 +130,7 @@ $(document).ready(function () {
         bestMatches.forEach(r => {
             const currentSum = r.codigo.reduce((a, b) => a + b, 0);
             const bestSum = bestResponse.codigo.reduce((a, b) => a + b, 0);
+
             if (currentSum < bestSum) {
                 bestResponse = r;
             }
@@ -147,10 +148,6 @@ $(document).ready(function () {
         } else {
             respostaFinal = bestResponse.resposta;
         }
-    
-        console.log("Palavras do usuário:", inputWords);
-        console.log("Códigos identificados:", userCodes);
-        console.log("Resposta escolhida:", respostaFinal);
     
         return respostaFinal;
     }
@@ -180,5 +177,6 @@ $(document).ready(function () {
         }
     });
 
+    // Adiciona a primeira mensagem do bot ao carregar a página
     addBotMessage("Olá! Sou o chatbot da FURIA. Estou aqui para te fazer entender tudo sobre a FURIA. O que você deseja saber sobre a FURIA ?");
 });
